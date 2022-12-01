@@ -24,3 +24,20 @@ spack install
 
 Note, `spack compiler find` may be needed to set up `gcc`.
 
+## Workaround for Cray Compiler OpenSSL Build Stall
+
+Cray compiler <= `cce@13.0.2` indefinitely stall when building OpenSSL due to
+bugs with Cray-specific optimisations.
+
+Work around by running `spack install` until Spack hangs on OpenSSL. Then
+interrupt build (ctrl+c) and install only OpenSSL with `-fno-cray` flag:
+
+```
+CFLAGS="-fno-cray" CPPFLAGS="-fno-cray" FFLAGS="-fno-cray" spack install --dirty openssl %cce@13.0.2
+```
+
+Argument `--dirty` necessary for Spack to pick up on `FLAGS` environment
+variables.
+
+Resume `spack install` afterwards.
+
