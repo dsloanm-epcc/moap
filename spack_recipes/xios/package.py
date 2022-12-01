@@ -119,7 +119,7 @@ HDF5_LIB="-lhdf5_hl -lhdf5"
         else:
             param["LIBCXX"] = "-lstdc++"
 
-        if any(map(spec.satisfies, ("%gcc", "%intel", "%apple-clang", "%clang", "%fj"))):
+        if any(map(spec.satisfies, ("%gcc", "%intel", "%apple-clang", "%clang", "%fj", "%cce"))):
             text = r"""
 %CCOMPILER      {MPICXX}
 %FCOMPILER      {MPIFC}
@@ -145,7 +145,7 @@ HDF5_LIB="-lhdf5_hl -lhdf5"
 """.format(
                 **param
             )
-        elif spec.satisfies("%cce"):
+        elif spec.satisfies("%DELME"):
             # In the CC compiler prior to cce/8.3.7,
             # optimisation must be reduced to avoid a bug,
             # as reported by Mike Rezny at the UK Met Office:
@@ -191,13 +191,19 @@ HDF5_LIB="-lhdf5_hl -lhdf5"
         env["F77"] = spec["mpi"].mpif77
         env["FC"] = spec["mpi"].mpifc
 
+        # Workaround for CCE race condition on IAXIS.mod by forcing serial make
+        if spec.satisfies("%cce"):
+            job_count = "1"
+        else:
+            job_count = str(make_jobs)
+
         options = [
             "--full",
             "--%s" % spec.variants["mode"].value,
             "--arch",
             "SPACK",
             "--job",
-            str(make_jobs),
+            job_count,
         ]
 
         self.xios_env()
