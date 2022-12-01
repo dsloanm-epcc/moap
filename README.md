@@ -38,7 +38,7 @@ See below for build issue workarounds.
 
 #### Workaround for OpenSSL Build Stall
 
-Cray compiler <= `cce@13.0.2` indefinitely stall when building OpenSSL due to
+Cray compilers <= `cce@13.0.2` indefinitely stall when building OpenSSL due to
 bugs with Cray-specific optimisations.
 
 Work around by running `spack install` until Spack hangs on OpenSSL. Then
