@@ -2,6 +2,8 @@
 
 ## Installation Instructions
 
+### GCC
+
 Create a test environment with the given environment file:
 
 ```
@@ -24,7 +26,17 @@ spack install
 
 Note, `spack compiler find` may be needed to set up `gcc`.
 
-## Workaround for Cray Compiler OpenSSL Build Stall
+### CCE
+
+Follow GCC instructions above but specify `%cce@13.0.2` compiler instead:
+
+```
+spack add lfric %cce@13.0.2
+```
+
+See below for build issue workarounds.
+
+#### Workaround for OpenSSL Build Stall
 
 Cray compiler <= `cce@13.0.2` indefinitely stall when building OpenSSL due to
 bugs with Cray-specific optimisations.
@@ -40,4 +52,16 @@ Argument `--dirty` necessary for Spack to pick up on `FLAGS` environment
 variables.
 
 Resume `spack install` afterwards.
+
+#### Workaround for LFRic Failing to Find _dgemm_, etc.
+
+When build fails with missing references to `_dgemm_` and other BLAS/LAPACK
+routines, restart with:
+
+```
+spack install --dirty
+```
+
+It is believed Spack is failing to pick up on `cray-libsci` without the
+`--dirty` flag.
 
