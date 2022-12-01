@@ -2,6 +2,17 @@
 
 ## Installation Instructions
 
+On ARCHER2, a pre-prepared Spack install is available for use at
+`/work/d435/d435/shared/spack` and contains hardlinks of the files in
+`spack_recipes`.
+
+To install from scratch. the latest Spack should be checked out and
+the directories under `spack_recipes` be placed/linked under
+`var/spack/repos/builtin/packages/`.
+
+Passwordless SVN access to relevant repositories should be set up to
+avoid permissions issues during the build.
+
 ### GCC
 
 Create a test environment with the given environment file:
