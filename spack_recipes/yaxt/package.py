@@ -43,6 +43,12 @@ class Yaxt(AutotoolsPackage):
 
     depends_on("mpi")
 
+
+    def setup_build_environment(self, env):
+        # MPI wrappers (not bare compilers) expected in $CC and $FC
+        env.set("CC", self.spec["mpi"].mpicc)
+        env.set("FC", self.spec["mpi"].mpifc)
+
     def configure_args(self):
         # Disable MPI tests with "--without-regard-for-quality"
         args = ["--with-idxtype=long", "--without-regard-for-quality"]

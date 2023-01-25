@@ -1,0 +1,59 @@
+spack:
+  config:
+    shared_linking: 'runpath'
+  compilers:
+  - compiler:
+      spec: intel@2021.1.1
+      paths:
+        cc: icc
+        cxx: icpc
+        f77: ifort
+        fc: ifort
+      operating_system: sles15
+      target: any
+      modules:
+      - debugger/10.0.0
+      - dpl/2021.1.1
+      - compiler/2021.1.1
+      - mpi/2021.1.1
+      - compiler-rt/2021.1.1
+      - tbb/2021.1.1
+      - mkl/2021.1.1
+  packages:
+    intel-oneapi-mpi:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-mpi@2021.1.1
+        prefix: /mnt/lustre/a2fs-work2/work/z19/shared/adrianj/intel/oneapi/
+    intel-oneapi-dpl:
+      buildable: false   
+      externals:
+      - spec: intel-oneapi-dpl@2021.1.1
+        prefix: /mnt/lustre/a2fs-work2/work/z19/shared/adrianj/intel/oneapi/
+    intel-oneapi-mkl:
+      buildable: false   
+      externals:
+      - spec: intel-oneapi-mkl@2021.1.1
+        prefix: /mnt/lustre/a2fs-work2/work/z19/shared/adrianj/intel/oneapi/
+    intel-oneapi-tbb:
+      buildable: false   
+      externals:
+      - spec: intel-oneapi-tbb@2021.1.1
+        prefix: /mnt/lustre/a2fs-work2/work/z19/shared/adrianj/intel/oneapi/
+    pkg-config:
+      buildable: false
+      externals:
+      - spec: pkg-config@0.29.2
+        prefix: /usr        
+    all:
+      providers:
+        mpi:
+        - intel-oneapi-mpi
+        blas:
+        - intel-oneapi-mkl
+        lapack:
+        - intel-oneapi-mkl
+        scalapack:
+        - intel-oneapi-mkl
+        pkgconfig:
+        - pkg-config

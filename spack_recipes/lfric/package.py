@@ -49,6 +49,13 @@ class Lfric(MakefilePackage):
     depends_on("py-psyclone@2.3.1")
     depends_on("rose-picker")
 
+    # Patch out "-warn errors" for Intel so build doesn't fail with:
+    #   utilities/mpi_mod.F90(184): error #8889: Explicit declaration of the
+    #   EXTERNAL attribute is required.   [MPI_ALLREDUCE]
+    #      call mpi_allreduce( l_sum, g_sum, 1, get_mpi_datatype( real_type,
+    #      r_double ), &
+    patch("ifort.mk.patch", when="%intel")
+
 
     def setup_build_environment(self, env):
         env.set("LFRIC_TARGET_PLATFORM", "meto-xc40")

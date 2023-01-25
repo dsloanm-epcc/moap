@@ -1,0 +1,11 @@
+--- trunk/infrastructure/build/fortran/ifort.mk.orig	2023-01-23 17:32:44.000000000 +0000
++++ trunk/infrastructure/build/fortran/ifort.mk	2023-01-23 17:32:57.000000000 +0000
+@@ -28,7 +28,7 @@
+ FFLAGS_SAFE_OPTIMISATION  = -O2 -fp-model strict
+ FFLAGS_RISKY_OPTIMISATION = -O3 -xhost
+ FFLAGS_DEBUG              = -g -traceback
+-FFLAGS_WARNINGS           = -warn all -warn errors
++FFLAGS_WARNINGS           = -warn all
+ FFLAGS_UNIT_WARNINGS      = -warn all
+ FFLAGS_INIT               = -ftrapuv
+ 
